@@ -20,6 +20,26 @@
 
     <!-- S input -->
     <input
+      v-if="mask.length"
+      v-mask="mask"
+      class="at-input__original"
+      :type="type"
+      :name="name"
+      :value="currentValue"
+      :placeholder="placeholder"
+      :min="min"
+      :max="max"
+      :minlength="minlength"
+      :maxlength="maxlength"
+      :disabled="disabled"
+      :readonly="readonly"
+      :autofocus="autofocus"
+      @focus="handleFocus"
+      @blur="handleBlur"
+      @input="handleInput">
+
+    <input
+      v-else
       class="at-input__original"
       :type="type"
       :name="name"
@@ -50,6 +70,8 @@
 </template>
 
 <script>
+
+    import {VueMaskDirective} from 'v-mask'
   import Emitter from 'at-ui/src/mixins/emitter'
 
   export default {
@@ -89,13 +111,20 @@
       maxlength: Number,
       minlength: Number,
       max: Number,
-      min: Number
+      min: Number,
+      mask: {
+        type: String,
+        default: ''
+      }
+    },
+    directives: {
+        mask: VueMaskDirective
     },
     computed: {
       iconClass () {
         const name = this.icon || this.status
         return name ? `icon-${name}` : ''
-      }
+      },
     },
     data () {
       return {

@@ -117,6 +117,9 @@ export default {
       this.$nextTick(() => {
         this.scrollToActiveTab()
       })
+    },
+    value () {
+        this.activeKey = this.value
     }
   },
   computed: {
